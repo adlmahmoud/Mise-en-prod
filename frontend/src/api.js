@@ -1,16 +1,28 @@
 // Toutes les requêtes vers le backend passent par ce fichier.
-// L'URL est lue depuis la variable d'environnement VITE_API_URL.
+// L'URL est nettoyée pour éviter tout problème de slash final.
+const rawUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API_URL = rawUrl.replace(/\/+$/, '');
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+console.log('📡 [API] Connecté à :', API_URL);
 
 /**
  * Récupère la liste de tous les tickets.
  * @returns {Promise<Array>}
  */
 export async function getTickets() {
-  const res = await fetch(`${API_URL}/api/tickets`);
-  if (!res.ok) throw new Error('Impossible de récupérer les tickets.');
-  return res.json();
+  try {
+    const res = await fetch(`${API_URL}/api/tickets`);
+    if (!res.ok) {
+      const errData = await res.json().catch(() => ({}));
+      throw new Error(errData.error || `Erreur serveur (${res.status})`);
+    }
+    return res.json();
+  } catch (err) {
+    console.error('Erreur getTickets :', err);
+    throw new Error(
+      `Impossible de joindre l'API (${API_URL}) : ${err.message}`
+    );
+  }
 }
 
 /**
