@@ -1,0 +1,283 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   RESET & VARIABLES
+───────────────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:          #f0f4f8;
+  --surface:     #ffffff;
+  --border:      #e2e8f0;
+  --text:        #1a202c;
+  --text-muted:  #718096;
+
+  --primary:     #4f46e5;
+  --primary-h:   #4338ca;
+
+  --danger:      #e53e3e;
+  --danger-h:    #c53030;
+
+  --ouvert:      #3b82f6;
+  --en-cours:    #f59e0b;
+  --resolu:      #10b981;
+
+  --radius:      0.75rem;
+  --shadow:      0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+  --shadow-h:    0 4px 12px rgba(0,0,0,.12), 0 8px 24px rgba(0,0,0,.08);
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   LAYOUT
+───────────────────────────────────────────────────────────────────────────── */
+.app { display: flex; flex-direction: column; min-height: 100vh; }
+
+.main {
+  flex: 1;
+  max-width: 900px;
+  width: 100%;
+  margin: 2rem auto;
+  padding: 0 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   HEADER
+───────────────────────────────────────────────────────────────────────────── */
+.header {
+  background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%);
+  color: #fff;
+  padding: 1.25rem 2rem;
+  box-shadow: 0 2px 8px rgba(79,70,229,.3);
+}
+.header-inner { display: flex; align-items: center; gap: 1rem; max-width: 900px; margin: 0 auto; }
+.header-icon  { font-size: 2.5rem; }
+.header h1    { font-size: 1.6rem; font-weight: 700; }
+.header p     { font-size: 0.875rem; opacity: .85; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   CARD
+───────────────────────────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  transition: box-shadow .2s;
+}
+.card:hover { box-shadow: var(--shadow-h); }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SECTION TITLE
+───────────────────────────────────────────────────────────────────────────── */
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   FORMULAIRE
+───────────────────────────────────────────────────────────────────────────── */
+.form          { display: flex; flex-direction: column; gap: .875rem; }
+.form-group    { display: flex; flex-direction: column; gap: .35rem; }
+.form-group label { font-size: .875rem; font-weight: 500; color: var(--text-muted); }
+
+.form-group input,
+.form-group textarea {
+  padding: .6rem .875rem;
+  border: 1.5px solid var(--border);
+  border-radius: .5rem;
+  font-size: .95rem;
+  font-family: inherit;
+  transition: border-color .15s;
+  resize: vertical;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79,70,229,.12);
+}
+
+.form-erreur { color: var(--danger); font-size: .875rem; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   BOUTONS
+───────────────────────────────────────────────────────────────────────────── */
+.btn {
+  padding: .6rem 1.2rem;
+  border: none;
+  border-radius: .5rem;
+  font-size: .9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s, transform .1s;
+}
+.btn:active   { transform: scale(.97); }
+.btn:disabled { opacity: .6; cursor: not-allowed; }
+
+.btn-primary  { background: var(--primary); color: #fff; }
+.btn-primary:hover:not(:disabled) { background: var(--primary-h); }
+
+.btn-danger   { background: transparent; color: var(--danger); border: 1.5px solid var(--danger); padding: .4rem .7rem; }
+.btn-danger:hover:not(:disabled) { background: var(--danger); color: #fff; }
+
+.btn-retry    { margin-left: .75rem; background: #fff; border: 1px solid currentColor; color: inherit; padding: .3rem .7rem; border-radius: .4rem; cursor: pointer; font-size: .85rem; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   FILTRES
+───────────────────────────────────────────────────────────────────────────── */
+.filtres { display: flex; gap: .6rem; flex-wrap: wrap; }
+
+.filtre-btn {
+  padding: .45rem 1rem;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  border-radius: 2rem;
+  font-size: .875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .15s;
+  display: flex; align-items: center; gap: .4rem;
+}
+.filtre-btn:hover  { border-color: var(--primary); color: var(--primary); }
+.filtre-btn.actif  { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+.badge {
+  background: rgba(0,0,0,.12);
+  color: inherit;
+  border-radius: 2rem;
+  padding: .05rem .45rem;
+  font-size: .75rem;
+  font-weight: 700;
+}
+.filtre-btn.actif .badge { background: rgba(255,255,255,.25); }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   GRILLE DE TICKETS
+───────────────────────────────────────────────────────────────────────────── */
+.ticket-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: .5rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   TICKET CARD
+───────────────────────────────────────────────────────────────────────────── */
+.ticket-card          { display: flex; flex-direction: column; gap: .6rem; position: relative; }
+.ticket-card.deleting { opacity: .4; pointer-events: none; transition: opacity .3s; }
+
+.statut-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  padding: .2rem .7rem;
+  border-radius: 2rem;
+  font-size: .78rem;
+  font-weight: 700;
+  align-self: flex-start;
+  letter-spacing: .02em;
+}
+.statut-ouvert   { background: #dbeafe; color: #1d4ed8; }
+.statut-en_cours { background: #fef3c7; color: #b45309; }
+.statut-resolu   { background: #d1fae5; color: #065f46; }
+
+.ticket-titre       { font-size: 1rem; font-weight: 600; color: var(--text); }
+.ticket-description { font-size: .875rem; color: var(--text-muted); line-height: 1.5; flex: 1; }
+.ticket-date        { font-size: .78rem; color: #a0aec0; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ACTIONS TICKET
+───────────────────────────────────────────────────────────────────────────── */
+.ticket-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  margin-top: .25rem;
+  padding-top: .75rem;
+  border-top: 1px solid var(--border);
+}
+
+.select-wrapper { position: relative; display: flex; align-items: center; gap: .5rem; }
+
+.statut-select {
+  appearance: none;
+  padding: .4rem 2rem .4rem .75rem;
+  border: 1.5px solid var(--border);
+  border-radius: .5rem;
+  font-size: .85rem;
+  font-family: inherit;
+  background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%23718096' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right .6rem center;
+  cursor: pointer;
+  transition: border-color .15s;
+}
+.statut-select:focus { outline: none; border-color: var(--primary); }
+.statut-select:disabled { opacity: .6; cursor: not-allowed; }
+
+.select-loading { font-size: .8rem; color: var(--text-muted); }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ÉTATS (loading / erreur / vide)
+───────────────────────────────────────────────────────────────────────────── */
+.etat-centre {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-muted);
+  display: flex; flex-direction: column; align-items: center; gap: .75rem;
+}
+
+.etat-erreur {
+  background: #fff5f5;
+  border: 1px solid #feb2b2;
+  color: var(--danger);
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius);
+  display: flex; align-items: center; gap: .75rem; flex-wrap: wrap;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SPINNER
+───────────────────────────────────────────────────────────────────────────── */
+.spinner {
+  width: 36px; height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────────────────────────────────────────── */
+.footer {
+  text-align: center;
+  padding: 1.25rem;
+  font-size: .8rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .header { padding: 1rem; }
+  .header h1 { font-size: 1.3rem; }
+  .ticket-grid { grid-template-columns: 1fr; }
+}
